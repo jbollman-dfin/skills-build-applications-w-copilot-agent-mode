@@ -1,4 +1,23 @@
-# React + Vite
+# Octofit Tracker frontend
+
+## API configuration
+
+In Codespaces, define `VITE_CODESPACE_NAME` in `.env.local` with the value of
+your Codespace name. The frontend then calls
+`https://<codespace-name>-8000.app.github.dev/api/<component>/`.
+
+Copy `.env.example` to `.env.local` and replace the placeholder value. When
+`VITE_CODESPACE_NAME` is unset, requests safely fall back to
+`http://localhost:8000`.
+
+## Development
+
+```bash
+npm run dev
+```
+
+The app uses React Router for navigation and accepts array responses as well
+as common paginated shapes: `data`, `items`, `results`, and `docs`.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

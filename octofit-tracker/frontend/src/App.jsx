@@ -1,122 +1,46 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import Activities from './components/Activities.jsx'
+import Leaderboard from './components/Leaderboard.jsx'
+import Teams from './components/Teams.jsx'
+import Users from './components/Users.jsx'
+import Workouts from './components/Workouts.jsx'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  return <div className="app-shell">
+    <header className="topbar"><div className="brand-mark"><span>O</span> Octofit</div><span className="status-dot">Live training hub</span></header>
+    <div className="workspace">
+      <aside className="sidebar"><p className="eyebrow">Your workspace</p><nav className="nav-stack" aria-label="Main navigation">
+        <NavigationLink to="/" label="Overview" icon="◆" /><NavigationLink to="/activities" label="Activities" icon="↗" /><NavigationLink to="/leaderboard" label="Leaderboard" icon="♜" /><NavigationLink to="/teams" label="Teams" icon="◎" /><NavigationLink to="/users" label="Members" icon="♙" /><NavigationLink to="/workouts" label="Workouts" icon="◒" />
+      </nav><div className="sidebar-note"><strong>Stay in motion.</strong><span>Small sessions add up.</span></div></aside>
+      <main className="content-area"><Routes>
+        <Route path="/" element={<Overview />} />
+        <Route path="/activities" element={<Page title="Activities" description="Recent movement across your teams."><Activities /></Page>} />
+        <Route path="/leaderboard" element={<Page title="Leaderboard" description="See who is setting the pace."><Leaderboard /></Page>} />
+        <Route path="/teams" element={<Page title="Teams" description="The crews making consistency competitive."><Teams /></Page>} />
+        <Route path="/users" element={<Page title="Members" description="Everyone showing up for the challenge."><Users /></Page>} />
+        <Route path="/workouts" element={<Page title="Workouts" description="Practical sessions for every energy level."><Workouts /></Page>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes></main>
+    </div>
+  </div>
+}
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+function NavigationLink({ to, label, icon }) {
+  return <NavLink to={to} end={to === '/'} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}><span className="nav-icon">{icon}</span>{label}</NavLink>
+}
 
-      <div className="ticks"></div>
+function Page({ title, description, children }) {
+  return <><PageHeader title={title} description={description} /><section className="panel">{children}</section></>
+}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+function PageHeader({ title, description }) {
+  return <div className="page-heading"><div><p className="eyebrow">Octofit tracker</p><h1>{title}</h1><p className="lede">{description}</p></div><div className="date-chip">This week <span>↗</span></div></div>
+}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+function Overview() {
+  const location = useLocation()
+  return <><PageHeader title="Good momentum" description="A clear view of your team's movement this week." /><section className="overview-grid"><div className="feature-panel"><p className="eyebrow">Weekly focus</p><h2>Build your rhythm,<br /><em>one session at a time.</em></h2><p>Log an activity, invite your team, and keep the points moving.</p><NavLink className="primary-button" to="/activities">View activities <span>→</span></NavLink></div><div className="metric-panel"><span className="metric-label">Explore</span><div className="metric-links"><NavLink to="/leaderboard">Leaderboard <span>→</span></NavLink><NavLink to="/workouts">Find a workout <span>→</span></NavLink><NavLink to="/teams">Meet your teams <span>→</span></NavLink></div></div></section><p className="route-hint" data-route={location.pathname}>Powered by the Octofit API</p></>
 }
 
 export default App

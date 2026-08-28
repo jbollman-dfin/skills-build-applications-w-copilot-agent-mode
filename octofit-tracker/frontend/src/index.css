@@ -109,3 +109,24 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+:root {
+  --ink: #192d2a;
+  --muted: #71807b;
+  --paper: #f4f5ef;
+  --line: #dce3dc;
+  --mint: #d8f08d;
+  --coral: #f0785d;
+  --forest: #1d473c;
+  --sans: 'Trebuchet MS', 'Avenir Next', sans-serif;
+  --heading: Georgia, serif;
+  color: var(--ink);
+  background: var(--paper);
+  color-scheme: light;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+body { background: radial-gradient(circle at 90% 0%, #fffdf1 0, var(--paper) 42%); }
+#root { width: 100%; max-width: none; margin: 0; border: 0; text-align: left; display: block; }
+h1, h2, p { margin: 0; }
