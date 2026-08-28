@@ -9,6 +9,7 @@ app.use((request, response, next) => {
   const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000'];
 
   if (process.env.CODESPACE_NAME) {
+    allowedOrigins.push(`https://${process.env.CODESPACE_NAME}-8000.app.github.dev`);
     allowedOrigins.push(`https://${process.env.CODESPACE_NAME}-5173.app.github.dev`);
   }
 
