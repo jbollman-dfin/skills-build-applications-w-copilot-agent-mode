@@ -14,8 +14,8 @@ export function toArray(payload) {
   return payload.data || payload.items || payload.results || payload.docs || []
 }
 
-export async function fetchCollection(component) {
-  const response = await fetch(getApiUrl(component))
+export async function fetchCollection(component, endpoint = getApiUrl(component)) {
+  const response = await fetch(endpoint)
   if (!response.ok) throw new Error(`Could not load ${component}.`)
   return toArray(await response.json())
 }
